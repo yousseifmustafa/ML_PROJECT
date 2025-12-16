@@ -3,14 +3,8 @@ import pandas as pd
 import numpy as np
 import joblib
 
-# -----------------------------------------------------------
-# 1. Page Config (لازم تكون أول حاجة هنا)
-# -----------------------------------------------------------
 st.set_page_config(page_title="Credit Risk Predictor", page_icon="💳", layout="wide")
 
-# -----------------------------------------------------------
-# 2. Load the saved Model and Scaler
-# -----------------------------------------------------------
 @st.cache_resource
 def load_assets():
     try:
@@ -18,14 +12,11 @@ def load_assets():
         scaler = joblib.load('scaler.pkl')
         return model, scaler
     except FileNotFoundError:
-        st.error("⚠️ ملفات الموديل (pkl) مش موجودة! تأكد إنك عملت Run لآخر سيل في النوت بوك ونقلت الملفات هنا.")
+        st.error("ملفات الموديل (pkl) مش موجودة! تأكد إنك عملت Run لآخر سيل في النوت بوك ونقلت الملفات هنا.")
         return None, None
 
 model, scaler = load_assets()
 
-# -----------------------------------------------------------
-# 3. Define Mappings & Constants
-# -----------------------------------------------------------
 EDUCATION_MAPPING = {
     'Lower secondary': 0,
     'Secondary / secondary special': 1,
@@ -36,12 +27,8 @@ EDUCATION_MAPPING = {
 
 NUMERIC_COLS = ['ChldNo', 'inc', 'famsize', 'AGE_YEARS', 'EMPLOYMENT_YEARS']
 
-# -----------------------------------------------------------
-# 4. UI Layout (باقي الكود زي ما هو)
-# -----------------------------------------------------------
 st.title("💳 Credit Card Approval Prediction System")
 st.markdown("""
-### SehaTech ML Project Demo
 Enter the applicant's details below to predict their credit risk status.
 **(Good Client vs. Bad Client)**
 """)
@@ -86,9 +73,7 @@ with c2:
 with c3:
     email = st.checkbox("Has Email?")
 
-# -----------------------------------------------------------
-# 5. Preprocessing & Prediction Logic
-# -----------------------------------------------------------
+
 def preprocess_input():
     input_data = {
         'Gender': 1 if gender == 'M' else 0, 
